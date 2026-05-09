@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keshav Singh — BI Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0c0f;
+    --surface: #13151a;
+    --surface2: #1a1d24;
+    --surface3: #20232c;
+    --border: rgba(255,255,255,0.06);
+    --border2: rgba(255,255,255,0.11);
+    --text: #e6e9f0;
+    --muted: #6b7180;
+    --muted2: #9ea4b3;
+    --accent: #4f8ef7;
+    --accent-green: #3ecf8e;
+    --accent-amber: #f6a623;
+    --accent-coral: #f07575;
+    --accent-purple: #a78bfa;
+    --accent-teal: #2dd4bf;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    max-width: 1020px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 1rem 0;
+    background: rgba(11,12,15,0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 0.5px solid var(--border);
+    margin-bottom: 0;
+  }
+  .nav-inner {
+    max-width: 1020px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+  .nav-logo span { color: var(--accent); font-style: italic; }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 6rem 0 4.5rem;
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.6;
+  }
+  .hero-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 7vw, 5.2rem);
+    font-weight: 400;
+    line-height: 1.0;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.02em;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    letter-spacing: -0.01em;
+  }
+  .hero-bio {
+    font-size: 15.5px;
+    color: var(--muted2);
+    max-width: 620px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+  .hero-bio strong { color: var(--text); font-weight: 500; }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0.6rem 1.3rem;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #6ba3f9; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted2);
+    border: 0.5px solid var(--border2);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+  /* ── STATS STRIP ── */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border2);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 3.5rem 0;
+  }
+  .stat-cell {
+    background: var(--surface);
+    padding: 1.5rem 1.25rem 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-cell::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .stat-cell:nth-child(1)::after { background: var(--accent); }
+  .stat-cell:nth-child(2)::after { background: var(--accent-green); }
+  .stat-cell:nth-child(3)::after { background: var(--accent-amber); }
+  .stat-cell:nth-child(4)::after { background: var(--accent-purple); }
+  .stat-val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.6rem;
+    line-height: 1;
+    margin-bottom: 5px;
+  }
+  .stat-cell:nth-child(1) .stat-val { color: var(--accent); }
+  .stat-cell:nth-child(2) .stat-val { color: var(--accent-green); }
+  .stat-cell:nth-child(3) .stat-val { color: var(--accent-amber); }
+  .stat-cell:nth-child(4) .stat-val { color: var(--accent-purple); }
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+  }
+
+  /* ── SECTION HEADING ── */
+  .sec-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 2rem;
+    margin-top: 4.5rem;
+  }
+  .sec-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+  .sec-heading h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .sec-line {
+    flex: 1;
+    height: 0.5px;
+    background: var(--border2);
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-meta {}
+  .exp-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .exp-company {
+    font-size: 12.5px;
+    color: var(--muted2);
+  }
+  .exp-location {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .exp-role {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.9rem;
+  }
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  .exp-bullets li {
+    font-size: 13.5px;
+    color: var(--muted2);
+    line-height: 1.65;
+    padding-left: 1.1rem;
+    position: relative;
+  }
+  .exp-bullets li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+  }
+  .exp-bullets li strong { color: var(--text); font-weight: 500; }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .project-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .project-card:hover {
+    border-color: rgba(255,255,255,0.2);
+    transform: translateY(-2px);
+  }
+  .project-card.featured {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .pc-accent-bar {
+    height: 3px;
+    width: 100%;
+  }
+  .project-card.featured .pc-accent-bar {
+    grid-column: span 2;
+    height: 3px;
+  }
+  .pc-body {
+    padding: 1.5rem 1.5rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .project-card.featured .pc-body {
+    padding: 1.75rem 2rem;
+  }
+  .pc-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+  .pc-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    line-height: 1.25;
+  }
+  .project-card.featured .pc-title {
+    font-size: 1.35rem;
+  }
+  .pc-desc {
+    font-size: 13px;
+    color: var(--muted2);
+    line-height: 1.7;
+    flex: 1;
+    margin-bottom: 1.1rem;
+  }
+  .pc-stats {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0.85rem 1rem;
+    background: var(--surface2);
+    border-top: 0.5px solid var(--border);
+  }
+  .pc-stat-item {
+    display: flex;
+    flex-direction: column;
+  }
+  .pc-stat-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.1;
+  }
+  .pc-stat-label {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .pc-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: auto;
+    padding-top: 0.85rem;
+  }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 2px 9px;
+    border-radius: 20px;
+    border: 0.5px solid var(--border2);
+    color: var(--muted);
+    background: var(--surface2);
+    letter-spacing: 0.02em;
+  }
+  .tag.blue { color: var(--accent); border-color: rgba(79,142,247,0.3); background: rgba(79,142,247,0.07); }
+  .tag.green { color: var(--accent-green); border-color: rgba(62,207,142,0.3); background: rgba(62,207,142,0.07); }
+  .tag.amber { color: var(--accent-amber); border-color: rgba(246,166,35,0.3); background: rgba(246,166,35,0.07); }
+  .tag.coral { color: var(--accent-coral); border-color: rgba(240,117,117,0.3); background: rgba(240,117,117,0.07); }
+  .tag.purple { color: var(--accent-purple); border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.07); }
+  .tag.teal { color: var(--accent-teal); border-color: rgba(45,212,191,0.3); background: rgba(45,212,191,0.07); }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .skill-group {
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: 12px;
+    padding: 1.25rem 1.4rem;
+  }
+  .skill-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .skill-group-title::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+  }
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  /* ── CERTIFICATIONS ── */
+  .certs-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .cert-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: 12px;
+    padding: 1.25rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: border-color 0.2s;
+  }
+  .cert-card:hover { border-color: rgba(255,255,255,0.2); }
+  .cert-issuer {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .cert-name {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .cert-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+  }
+
+  /* ── ACHIEVEMENTS ── */
+  .achievements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .ach-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: 10px;
+    font-size: 14px;
+    color: var(--muted2);
+    line-height: 1.55;
+  }
+  .ach-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── CONTACT / FOOTER ── */
+  .contact-section {
+    margin-top: 5rem;
+    padding: 3rem 2.5rem;
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: 18px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+  }
+  .contact-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.9rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .contact-title em { font-style: italic; color: var(--accent); }
+  .contact-sub {
+    font-size: 14px;
+    color: var(--muted);
+    max-width: 420px;
+    line-height: 1.65;
+  }
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+  }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted2);
+    text-decoration: none;
+    transition: color 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .contact-link:hover { color: var(--accent); }
+  .contact-link svg { opacity: 0.5; width: 14px; height: 14px; }
+  .contact-link:hover svg { opacity: 1; }
+
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding-top: 2rem;
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── EDUCATION ── */
+  .edu-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: 12px;
+    padding: 1.4rem 1.6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .edu-degree {
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .edu-school {
+    font-size: 13px;
+    color: var(--muted2);
+  }
+  .edu-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow { animation: fadeUp 0.5s ease both; }
+  .hero-name    { animation: fadeUp 0.55s 0.08s ease both; }
+  .hero-title   { animation: fadeUp 0.55s 0.14s ease both; }
+  .hero-bio     { animation: fadeUp 0.55s 0.2s ease both; }
+  .hero-cta     { animation: fadeUp 0.55s 0.26s ease both; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card.featured { grid-column: span 1; display: flex; }
+    .project-card.featured .pc-accent-bar { grid-column: unset; }
+    .certs-row { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.75rem; }
+    .stats-strip { grid-template-columns: repeat(2, 1fr); }
+    .contact-section { grid-template-columns: 1fr; }
+    .contact-links { align-items: flex-start; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Keshav <span>Singh</span></a>
+    <ul class="nav-links">
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#certifications">Certs</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero" id="about">
+    <p class="hero-eyebrow">BI Developer · Power BI · Microsoft Fabric · Snowflake</p>
+    <h1 class="hero-name">Keshav<br><em>Singh</em></h1>
+    <p class="hero-title">Associate BI Developer</p>
+    <p class="hero-bio">
+      <strong>Microsoft Certified</strong> Power BI &amp; Fabric Developer (PL-300, DP-600, DP-700) with 4+ years delivering enterprise-grade BI solutions across pharmaceutical, healthcare, sales, marketing, and retail. Deep expertise in <strong>semantic model design</strong>, advanced DAX, Snowflake integrations, and AI-assisted BI development pipelines.
+    </p>
+    <div class="hero-cta">
+      <a href="mailto:keshav.singh194@gmail.com" class="btn btn-primary">Get in touch</a>
+      <a href="https://www.linkedin.com/in/keshavsingh19/" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn ↗</a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-strip">
+    <div class="stat-cell">
+      <div class="stat-val">4+</div>
+      <div class="stat-label">Years experience</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-val">3</div>
+      <div class="stat-label">Microsoft certifications</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-val">1,275+</div>
+      <div class="stat-label">DAX measures engineered</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-val">7</div>
+      <div class="stat-label">Enterprise projects</div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="sec-heading">
+      <span class="sec-num">01</span>
+      <h2>Experience</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Feb 2024 — Present</div>
+        <div class="exp-company">Nice Software Solutions</div>
+        <div class="exp-location">Nagpur, MH</div>
+      </div>
+      <div>
+        <div class="exp-role">Associate BI Developer</div>
+        <ul class="exp-bullets">
+          <li>Own end-to-end Power BI delivery across pharmaceutical, healthcare, sales, marketing, and retail clients — from requirements gathering and RFP preparation to semantic model design, report development, UAT, and post-deployment support.</li>
+          <li>Design and optimize <strong>star/snowflake schema</strong> semantic models with complex DAX, RLS, and performance tuning across large-scale datasets (up to 7.3 GB and 1,275+ measures).</li>
+          <li>Pioneered <strong>AI-assisted BI development</strong> by connecting Power BI Desktop to Claude via MCP server, enabling live DAX querying and automated model audits — significantly reducing turnaround time for the entire team.</li>
+          <li>Built custom HTML/CSS visuals rendered inside Power BI containers, replacing standard visuals with interactive, modern-looking dashboards.</li>
+          <li>Developed Paginated Reports with company branding, reducing a <strong>20-hour/month manual effort to a 2-minute</strong> automated export process.</li>
+          <li>Engineered Power Automate workflows for refresh automation, write-back, and PDF contract parsing with structured SharePoint ingestion.</li>
+          <li>Designed PoC solutions in <strong>Microsoft Fabric</strong> including Multi-Tenant Architecture and Medallion (Bronze/Silver/Gold) Lakehouse patterns.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Jul 2023 — Feb 2024</div>
+        <div class="exp-company">HotelKey, Inc</div>
+        <div class="exp-location">Nagpur, MH</div>
+      </div>
+      <div>
+        <div class="exp-role">Technical Support Analyst</div>
+        <ul class="exp-bullets">
+          <li>Audited and resolved issues in hotel financial Power BI dashboards, diagnosing data discrepancies using SQL queries via Jenkins.</li>
+          <li>Managed Tier-1/2 technical cases for Property Management System clients with structured root-cause analysis.</li>
+          <li>Built a reusable knowledge base that cut average case resolution time across the team.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Jul 2021 — Sep 2022</div>
+        <div class="exp-company">Advids.co</div>
+        <div class="exp-location">Pune, MH</div>
+      </div>
+      <div>
+        <div class="exp-role">Client Experience Executive</div>
+        <ul class="exp-bullets">
+          <li>Led end-to-end project coordination for 30+ video production engagements across design, production, and editing teams.</li>
+          <li>Served as primary contact for 15+ client accounts, translating business goals into actionable production briefs.</li>
+          <li>Introduced standardized project handoff templates and mentored junior team members on delivery processes.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="sec-heading">
+      <span class="sec-num">02</span>
+      <h2>Projects</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- FEATURED: Marketing 3.0 -->
+      <div class="project-card featured">
+        <div class="pc-accent-bar" style="background: linear-gradient(90deg, var(--accent), var(--accent-teal))"></div>
+        <div class="pc-body">
+          <div class="pc-label">Featured · Event Analytics</div>
+          <div class="pc-title">Marketing 3.0 Event Analytics Model</div>
+          <div class="pc-desc">Large-scale semantic model tracking event registrations, revenue pacing, and audience overlap across multi-year timelines. Engineered a UNION/TREATAS event overlap engine, ISO-week pacing logic, and a revenue variance bridge with volume/price effect switching via parameters. TopN/BottomN ranking with dynamic direction and a COALESCE-based 5-iteration budget fallback.</div>
+          <div class="pc-tags">
+            <span class="tag blue">Power BI</span>
+            <span class="tag">DAX</span>
+            <span class="tag teal">Snowflake</span>
+            <span class="tag green">TREATAS</span>
+            <span class="tag amber">INTERSECT</span>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+          <div class="pc-body" style="border-left: 0.5px solid var(--border);">
+            <div class="pc-label">Architecture highlights</div>
+            <ul class="exp-bullets" style="margin-top:0.25rem">
+              <li>Cohort retention waterfall using INTERSECT across cross-year sets</li>
+              <li>ROWNUMBER-based TopN with dynamic ascending/descending toggle</li>
+              <li>17 parameter tables enabling fully dynamic report behavior</li>
+              <li>Event overlap engine identifying registrant cohorts across events</li>
+            </ul>
+          </div>
+          <div class="pc-stats" style="margin-top: auto;">
+            <div class="pc-stat-item">
+              <span class="pc-stat-val" style="color:var(--accent)">48</span>
+              <span class="pc-stat-label">Tables</span>
+            </div>
+            <div class="pc-stat-item">
+              <span class="pc-stat-val" style="color:var(--accent)">643</span>
+              <span class="pc-stat-label">Measures</span>
+            </div>
+            <div class="pc-stat-item">
+              <span class="pc-stat-val" style="color:var(--accent)">35</span>
+              <span class="pc-stat-label">Relationships</span>
+            </div>
+            <div class="pc-stat-item">
+              <span class="pc-stat-val" style="color:var(--accent)">17</span>
+              <span class="pc-stat-label">Params</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enterprise Master Finance Model -->
+      <div class="project-card">
+        <div class="pc-accent-bar" style="background: var(--accent-amber)"></div>
+        <div class="pc-body">
+          <div class="pc-label">Enterprise · Finance</div>
+          <div class="pc-title">Enterprise Master Finance Model</div>
+          <div class="pc-desc">Canonical enterprise data model spanning financials, CRM, events, editorial, budgeting, and HR. Multi-year running totals with dual date axes, AD group-based RLS via SharePoint, and a Sales Hub pipeline snapshot architecture for stage-conversion analysis.</div>
+          <div class="pc-tags">
+            <span class="tag amber">Power BI</span>
+            <span class="tag">DAX</span>
+            <span class="tag teal">Snowflake</span>
+            <span class="tag">SQL</span>
+            <span class="tag">SharePoint</span>
+          </div>
+        </div>
+        <div class="pc-stats">
+          <div class="pc-stat-item">
+            <span class="pc-stat-val" style="color:var(--accent-amber)">178</span>
+            <span class="pc-stat-label">Tables</span>
+          </div>
+          <div class="pc-stat-item">
+            <span class="pc-stat-val" style="color:var(--accent-amber)">380</span>
+            <span class="pc-stat-label">Measures</span>
+          </div>
+          <div class="pc-stat-item">
+            <span class="pc-stat-val" style="color:var(--accent-amber)">220</span>
+            <span class="pc-stat-label">Relationships</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sales Effectiveness -->
+      <div class="project-card">
+        <div class="pc-accent-bar" style="background: var(--accent-green)"></div>
+        <div class="pc-body">
+          <div class="pc-label">Sales · CRM</div>
+          <div class="pc-title">Sales Effectiveness Report</div>
+          <div class="pc-desc">Unified sales performance model consolidating NetSuite financials, HubSpot CRM, and FDA pipeline data. Dual revenue stream aggregation preventing double-counting, Week Offset pacing for N-week-ago comparisons, and a bridge table resolving NetSuite/HubSpot identity mismatches.</div>
+          <div class="pc-tags">
+            <span class="tag green">Power BI</span>
+            <span class="tag">DAX</span>
+            <span class="tag teal">Snowflake</span>
+            <span class="tag">HubSpot</span>
+            <span class="tag">NetSuite</span>
+          </div>
+        </div>
+        <div class="pc-stats">
+          <div class="pc-stat-item">
+            <span class="pc-stat-val" style="color:var(--accent-green)">48</span>
+            <span class="pc-stat-label">Tables</span>
+          </div>
+          <div class="pc-stat-item">
+            <span class="pc-stat-val" style="color:var(--accent-green)">208</span>
+            <span class="pc-stat-label">Measures</span>
+          </div>
+          <div class="pc-stat-item">
+            <span class="pc-stat-val" style="color:var(--accent-green)">81</span>
+            <span class="pc-stat-label">Relationships</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIIA -->
+      <div class="project-card">
+        <div class="pc-accent-bar" style="background: var(--accent-coral)"></div>
+        <div class="pc-body">
+          <div class="pc-label">Pharma · Segmentation</div>
+          <div class="pc-title">HCP Audience Segmentation Tool (VIIA)</div>
+          <div class="pc-desc">NPI provider segmentation enabling AND/OR filter modes across a 4-level taxonomy. Solved AND logic on flat denormalized taxonomy — architecturally unsolvable via standard propagation — using 4 disconnected slicer tables, 4 bridge tables, and a 16-branch SWITCH/INTERSECT pattern.</div>
+          <div class="pc-tags">
+            <span class="tag coral">Power BI</span>
+            <span class="tag">DAX</span>
+            <span class="tag teal">Snowflake</span>
+            <span class="tag">HTML measures</span>
+          </div>
+        </div>
+        <div class="pc-stats">
+          <div class="pc-stat-item">
+            <span class="pc-stat-val" style="color:var(--accent-coral)">25</span>
+            <span class="pc-stat-label">Tables</span>
+          </div>
+          <div class="pc-stat-item">
+            <span class="pc-stat-val" style="color:var(--accent-coral)">44</span>
+            <span class="pc-stat-label">Measures</span>
+          </div>
+          <div class="pc-stat-item">
+            <span class="pc-stat-val" style="color:var(--accent-coral)">29</span>
+            <span class="pc-stat-label">Relationships</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paginated Report -->
+      <div class="project-card">
+        <div class="pc-accent-bar" style="background: var(--accent-purple)"></div>
+        <div class="pc-body">
+          <div class="pc-label">Marketing · Automation</div>
+          <div class="pc-title">Collective Campaign Paginated Report</div>
+          <div class="pc-desc">Paginated RDL report delivering per-campaign digital marketing performance across 9 tactic types. Used TREATAS as inline dataset-level filters within SUMMARIZECOLUMNS, making each tactic dataset self-contained. Reduced a 40-hour/month manual effort to minutes.</div>
+          <div class="pc-tags">
+            <span class="tag purple">Paginated Reports</span>
+            <span class="tag">RDL</span>
+            <span class="tag">DAX</span>
+            <span class="tag">TREATAS</span>
+          </div>
+        </div>
+        <div class="pc-stats">
+          <div class="pc-stat-item">
+            <span class="pc-stat-val" style="color:var(--accent-purple)">13</span>
+            <span class="pc-stat-label">Datasets</span>
+          </div>
+          <div class="pc-stat-item">
+            <span class="pc-stat-val" style="color:var(--accent-purple)">10</span>
+            <span class="pc-stat-label">Tablixes</span>
+          </div>
+          <div class="pc-stat-item">
+            <span class="pc-stat-val" style="color:var(--accent-purple)">40h→min</span>
+            <span class="pc-stat-label">Time saved</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pharma Sales -->
+      <div class="project-card">
+        <div class="pc-accent-bar" style="background: var(--accent-teal)"></div>
+        <div class="pc-body">
+          <div class="pc-label">Pharma · Market Analytics</div>
+          <div class="pc-title">Pharmaceutical Sales &amp; Market Analytics</div>
+          <div class="pc-desc">Interactive dashboards analyzing drug performance, market trends, and regional distribution. Integrated third-party datasets via Dataflow Gen2, built complex DAX with CALCULATE, RANKX, and time intelligence, plus a Power Automate on-demand refresh trigger embedded directly in the report.</div>
+          <div class="pc-tags">
+            <span class="tag teal">Power BI</span>
+            <span class="tag">Dataflow Gen2</span>
+            <span class="tag green">Power Automate</span>
+            <span class="tag">DAX</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="sec-heading">
+      <span class="sec-num">03</span>
+      <h2>Skills</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Core BI</div>
+        <div class="skill-tags">
+          <span class="tag blue">Power BI Desktop</span>
+          <span class="tag blue">Power BI Service</span>
+          <span class="tag blue">DAX</span>
+          <span class="tag blue">Power Query (M)</span>
+          <span class="tag blue">Paginated Reports</span>
+          <span class="tag blue">Semantic Models</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Advanced DAX</div>
+        <div class="skill-tags">
+          <span class="tag amber">Time Intelligence</span>
+          <span class="tag amber">Pacing Patterns</span>
+          <span class="tag amber">TopN + Others</span>
+          <span class="tag amber">AND/OR Segmentation</span>
+          <span class="tag amber">Dynamic Parameters</span>
+          <span class="tag amber">TREATAS / INTERSECT</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Data Modeling</div>
+        <div class="skill-tags">
+          <span class="tag green">Star Schema</span>
+          <span class="tag green">Snowflake Schema</span>
+          <span class="tag green">SCD Type 2</span>
+          <span class="tag green">RLS</span>
+          <span class="tag green">Many-to-Many Bridges</span>
+          <span class="tag green">Composite Models</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Microsoft Fabric</div>
+        <div class="skill-tags">
+          <span class="tag purple">Lakehouse</span>
+          <span class="tag purple">Warehouse</span>
+          <span class="tag purple">Data Factory Pipelines</span>
+          <span class="tag purple">Dataflows Gen2</span>
+          <span class="tag purple">Medallion Architecture</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-tags">
+          <span class="tag teal">SQL (PostgreSQL, T-SQL)</span>
+          <span class="tag teal">Snowflake SQL</span>
+          <span class="tag teal">DAX</span>
+          <span class="tag teal">M (Power Query)</span>
+          <span class="tag teal">HTML / CSS</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Cloud &amp; Integration</div>
+        <div class="skill-tags">
+          <span class="tag coral">Snowflake</span>
+          <span class="tag coral">SharePoint</span>
+          <span class="tag coral">Power Automate</span>
+          <span class="tag coral">Power Apps</span>
+          <span class="tag coral">OData</span>
+          <span class="tag coral">SAP</span>
+          <span class="tag coral">SQL Server</span>
+        </div>
+      </div>
+      <div class="skill-group" style="grid-column: span 2;">
+        <div class="skill-group-title">AI &amp; Automation</div>
+        <div class="skill-tags">
+          <span class="tag blue">Claude MCP Integration</span>
+          <span class="tag blue">AI-assisted BI Development</span>
+          <span class="tag blue">PDF data extraction via Power Automate</span>
+          <span class="tag">Jira</span>
+          <span class="tag">Zoho CRM</span>
+          <span class="tag">Microsoft Office Suite</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="sec-heading">
+      <span class="sec-num">04</span>
+      <h2>Certifications</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="certs-row">
+      <div class="cert-card">
+        <div class="cert-issuer" style="color:var(--accent)">Microsoft</div>
+        <div class="cert-name">Power BI Data Analyst Associate</div>
+        <div class="cert-code">PL-300</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-issuer" style="color:var(--accent)">Microsoft</div>
+        <div class="cert-name">Fabric Analytics Engineer Associate</div>
+        <div class="cert-code">DP-600</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-issuer" style="color:var(--accent)">Microsoft</div>
+        <div class="cert-name">Fabric Data Engineer Associate</div>
+        <div class="cert-code">DP-700</div>
+      </div>
+    </div>
+    <div class="certs-row" style="grid-template-columns: 1fr 2fr;">
+      <div class="cert-card">
+        <div class="cert-issuer" style="color:var(--accent-teal)">Snowflake</div>
+        <div class="cert-name">SnowPro Core Associate: Platform Certification</div>
+        <div class="cert-code">SnowPro Core</div>
+      </div>
+      <div class="cert-card" style="background: transparent; border-style: dashed; border-color: var(--border);">
+        <div class="cert-issuer">Education</div>
+        <div class="cert-name">B.E. in Information Technology — St. Vincent Pallotti College of Engineering and Technology</div>
+        <div class="cert-code" style="color:var(--muted)">Aug 2018 — Jun 2023</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+  <section id="achievements">
+    <div class="sec-heading">
+      <span class="sec-num">05</span>
+      <h2>Achievements</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="achievements-list">
+      <div class="ach-item">
+        <span class="ach-icon">🏆</span>
+        <span>Featured as <strong style="color:var(--text)">judges' favorite</strong> in the Power BI 10th Anniversary DataViz Contest organized by Microsoft</span>
+      </div>
+      <div class="ach-item">
+        <span class="ach-icon">⭐</span>
+        <span><strong style="color:var(--text)">2× Key Contributor Award</strong> at Nice Software Solutions</span>
+      </div>
+      <div class="ach-item">
+        <span class="ach-icon">🎖️</span>
+        <span><strong style="color:var(--text)">Excellence in Customer Service Award</strong> at Nice Software Solutions</span>
+      </div>
+      <div class="ach-item">
+        <span class="ach-icon">📷</span>
+        <span><strong style="color:var(--text)">1st Prize</strong> in "PhotoFlare 2016" Photography Competition by Goa Engineering College</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <div class="contact-section" id="contact">
+    <div>
+      <div class="contact-title">Let's <em>work together</em></div>
+      <div class="contact-sub">Open to BI engineering roles, consulting engagements, and interesting data problems. Based in Nagpur, MH — available for remote opportunities.</div>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:keshav.singh194@gmail.com" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        keshav.singh194@gmail.com
+      </a>
+      <a href="https://www.linkedin.com/in/keshavsingh19/" target="_blank" rel="noopener" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        linkedin.com/in/keshavsingh19
+      </a>
+      <a href="tel:+919665797068" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.22 2.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.06 6.06l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        +91 96657 97068
+      </a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>Keshav Singh · BI Developer</span>
+    <span>Nagpur, MH · India</span>
+  </footer>
+
+</div>
+</body>
+</html>
