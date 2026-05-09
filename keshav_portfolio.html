@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Keshav Singh — BI & Fabric Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg2: #111118;
+  --bg3: #16161f;
+  --border: rgba(255,255,255,0.07);
+  --border-accent: rgba(251,191,36,0.3);
+  --amber: #fbbf24;
+  --amber-dim: rgba(251,191,36,0.12);
+  --amber-glow: rgba(251,191,36,0.06);
+  --text: #e8e8f0;
+  --text-muted: #7a7a8c;
+  --text-dim: #4a4a5a;
+  --white: #ffffff;
+  --teal: #2dd4bf;
+  --teal-dim: rgba(45,212,191,0.1);
+  --blue: #60a5fa;
+  --blue-dim: rgba(96,165,250,0.1);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* noise texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  color: var(--white);
+  letter-spacing: -0.02em;
+}
+.nav-logo span { color: var(--amber); }
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--amber); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 48px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(251,191,36,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(251,191,36,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+}
+
+.hero-glow {
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251,191,36,0.08) 0%, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -60%);
+  pointer-events: none;
+}
+
+.hero-content { position: relative; z-index: 1; max-width: 900px; }
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--amber);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-accent);
+  background: var(--amber-dim);
+  padding: 6px 14px;
+  border-radius: 100px;
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.1s;
+}
+.hero-tag::before { content: '◆'; font-size: 7px; }
+
+h1 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(48px, 7vw, 88px);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards 0.2s;
+}
+h1 .accent { color: var(--amber); }
+h1 .dim { color: var(--text-muted); font-weight: 400; }
+
+.hero-sub {
+  margin-top: 28px;
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 580px;
+  line-height: 1.75;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards 0.35s;
+}
+
+.hero-certs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 36px;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards 0.5s;
+}
+
+.cert-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  background: var(--bg2);
+  letter-spacing: 0.05em;
+}
+.cert-pill.highlight {
+  border-color: var(--border-accent);
+  color: var(--amber);
+  background: var(--amber-dim);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 44px;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards 0.65s;
+}
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--amber);
+  color: #0a0a0f;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(251,191,36,0.3);
+}
+
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-secondary:hover { border-color: var(--amber); color: var(--amber); }
+
+/* ── STATS BAR ── */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+.stat-item {
+  padding: 32px 48px;
+  border-right: 1px solid var(--border);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--amber);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ── SECTIONS ── */
+section { padding: 100px 48px; position: relative; }
+section + section { border-top: 1px solid var(--border); }
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--amber);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  max-width: 48px;
+  height: 1px;
+  background: var(--amber);
+  opacity: 0.4;
+}
+
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 4vw, 42px);
+  color: var(--white);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 56px;
+}
+
+/* ── EXPERIENCE ── */
+.exp-list { display: flex; flex-direction: column; gap: 2px; }
+
+.exp-item {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.exp-item:hover { border-color: rgba(251,191,36,0.2); }
+
+.exp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 28px;
+  cursor: pointer;
+  gap: 16px;
+}
+
+.exp-left { display: flex; align-items: center; gap: 18px; }
+
+.exp-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--amber);
+  flex-shrink: 0;
+  box-shadow: 0 0 12px rgba(251,191,36,0.5);
+}
+.exp-dot.dim { background: var(--text-dim); box-shadow: none; }
+
+.exp-role {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--white);
+}
+.exp-company {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.exp-right { text-align: right; flex-shrink: 0; }
+.exp-date {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+}
+.exp-location {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+.exp-chevron {
+  color: var(--text-dim);
+  font-size: 18px;
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+.exp-item.open .exp-chevron { transform: rotate(180deg); }
+.exp-item.open { border-color: rgba(251,191,36,0.25); }
+
+.exp-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.exp-item.open .exp-body { max-height: 600px; }
+
+.exp-bullets {
+  padding: 0 28px 24px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.exp-bullet {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  padding-left: 16px;
+  border-left: 1px solid var(--border-accent);
+  position: relative;
+}
+
+/* ── PROJECTS ── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.project-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s;
+  cursor: default;
+}
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--amber), transparent);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.project-card:hover { border-color: rgba(251,191,36,0.25); transform: translateY(-3px); }
+.project-card:hover::before { opacity: 1; }
+
+.project-card.wide { grid-column: span 2; }
+
+.project-icon {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--amber-dim);
+  border: 1px solid var(--border-accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  margin-bottom: 18px;
+}
+
+.project-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--white);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.project-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: 18px;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 3px 9px;
+  border-radius: 100px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.tag-amber { background: var(--amber-dim); color: var(--amber); border: 1px solid var(--border-accent); }
+.tag-teal { background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(45,212,191,0.2); }
+.tag-blue { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(96,165,250,0.2); }
+.tag-muted { background: rgba(255,255,255,0.04); color: var(--text-dim); border: 1px solid var(--border); }
+
+.project-stat {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+}
+.project-stat strong { color: var(--amber); }
+
+/* ── SKILLS ── */
+.skills-layout {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.skill-group {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  transition: border-color 0.2s;
+}
+.skill-group:hover { border-color: rgba(251,191,36,0.15); }
+
+.skill-group-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--amber);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.skill-chip {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--bg3);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  transition: color 0.2s, border-color 0.2s;
+}
+.skill-chip:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+
+/* ── CERTIFICATIONS ── */
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.cert-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.cert-card:hover { border-color: rgba(251,191,36,0.3); transform: translateY(-2px); }
+
+.cert-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  padding: 4px 10px;
+  border-radius: 100px;
+  border: 1px solid var(--border-accent);
+  color: var(--amber);
+  background: var(--amber-dim);
+  align-self: flex-start;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.cert-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--white);
+  line-height: 1.35;
+}
+.cert-issuer {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* ── ACHIEVEMENTS ── */
+.achievements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.achievement-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 24px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.2s;
+}
+.achievement-item:hover { border-color: rgba(251,191,36,0.2); }
+.achievement-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.achievement-text {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.achievement-text strong { color: var(--text); font-weight: 500; }
+
+/* ── CONTACT / FOOTER ── */
+.contact-section {
+  text-align: center;
+  padding: 100px 48px;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.contact-section::before {
+  content: '';
+  position: absolute;
+  bottom: -200px; left: 50%;
+  transform: translateX(-50%);
+  width: 500px; height: 400px;
+  background: radial-gradient(circle, rgba(251,191,36,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.contact-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--amber);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+}
+.contact-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(32px, 5vw, 56px);
+  color: var(--white);
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+.contact-sub {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+}
+.contact-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.contact-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+.contact-link:hover { color: var(--amber); }
+.contact-link svg { width: 15px; height: 15px; }
+
+footer {
+  text-align: center;
+  padding: 24px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  border-top: 1px solid var(--border);
+  letter-spacing: 0.04em;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* stagger children */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal-stagger.visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0s; }
+.reveal-stagger.visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.08s; }
+.reveal-stagger.visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.16s; }
+.reveal-stagger.visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.24s; }
+.reveal-stagger.visible > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 0.32s; }
+.reveal-stagger.visible > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 0.40s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  .nav-links { gap: 20px; }
+  .hero { padding: 100px 24px 60px; }
+  section { padding: 72px 24px; }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .stat-item { padding: 24px; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card.wide { grid-column: span 1; }
+  .skills-layout { grid-template-columns: 1fr 1fr; }
+  .certs-grid { grid-template-columns: 1fr; }
+  .contact-section { padding: 72px 24px; }
+}
+
+@media (max-width: 600px) {
+  .nav-links { display: none; }
+  .stats-bar { grid-template-columns: 1fr 1fr; }
+  .skills-layout { grid-template-columns: 1fr; }
+  .hero-actions { flex-direction: column; }
+  .btn-primary, .btn-secondary { justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">K<span>.</span>Singh</div>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Power BI &amp; Microsoft Fabric Developer</div>
+    <h1>Keshav<br><span class="accent">Singh</span><span class="dim">.</span></h1>
+    <p class="hero-sub">Senior BI developer with 4+ years building enterprise-grade data solutions — from 178-table semantic models to Fabric Lakehouse architecture — across pharma, healthcare, and retail.</p>
+    <div class="hero-certs">
+      <span class="cert-pill highlight">PL-300</span>
+      <span class="cert-pill highlight">DP-600</span>
+      <span class="cert-pill highlight">DP-700</span>
+      <span class="cert-pill">SnowPro Core</span>
+      <span class="cert-pill">Microsoft Fabric</span>
+      <span class="cert-pill">Snowflake</span>
+    </div>
+    <div class="hero-actions">
+      <a href="mailto:keshav.singh194@gmail.com" class="btn-primary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Get in Touch
+      </a>
+      <a href="https://www.linkedin.com/in/keshavsingh19/" target="_blank" class="btn-secondary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar reveal">
+  <div class="stat-item">
+    <div class="stat-num" data-target="4">0</div>
+    <div class="stat-label">Years Experience</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" data-target="178">0</div>
+    <div class="stat-label">Tables — Largest Model</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" data-target="1275">0</div>
+    <div class="stat-label">Measures — Peak Project</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" data-target="40">0</div>
+    <div class="stat-label">Hrs/Month Saved via Automation</div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Career</div>
+  <div class="section-title reveal">Where I've<br>built things.</div>
+  <div class="exp-list reveal-stagger">
+
+    <div class="exp-item open">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <div class="exp-left">
+          <div class="exp-dot"></div>
+          <div>
+            <div class="exp-role">Associate BI Developer</div>
+            <div class="exp-company">Nice Software Solutions Private Limited</div>
+          </div>
+        </div>
+        <div class="exp-right">
+          <div class="exp-date">Feb 2024 — Present</div>
+          <div class="exp-location">Nagpur, MH</div>
+        </div>
+        <div class="exp-chevron">&#8964;</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-bullets">
+          <div class="exp-bullet">Own end-to-end Power BI delivery — requirements gathering, semantic model design (star/snowflake schema, advanced DAX, RLS), report development, and post-deployment support — across pharma, healthcare, and retail clients.</div>
+          <div class="exp-bullet">Reduced a 40-hour/month manual reporting effort to minutes by delivering Paginated Reports with structured Excel export templates and automated refresh via Power Automate.</div>
+          <div class="exp-bullet">Designed PoC solutions in Microsoft Fabric including Medallion (Bronze/Silver/Gold) Lakehouse and Multi-Tenant Architecture using Dataflows Gen2 and Data Factory pipelines.</div>
+          <div class="exp-bullet">Integrated Claude via MCP server into Power BI Desktop for live DAX querying and automated model audits, significantly cutting turnaround time for the BI team.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <div class="exp-left">
+          <div class="exp-dot dim"></div>
+          <div>
+            <div class="exp-role">Technical Support Analyst</div>
+            <div class="exp-company">HotelKey, Inc</div>
+          </div>
+        </div>
+        <div class="exp-right">
+          <div class="exp-date">Jul 2023 — Feb 2024</div>
+          <div class="exp-location">Nagpur, MH</div>
+        </div>
+        <div class="exp-chevron">&#8964;</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-bullets">
+          <div class="exp-bullet">Audited hotel financial Power BI dashboards and resolved data discrepancies using SQL queries via Jenkins; managed a queue of Tier-1/2 PMS cases with structured root-cause analysis.</div>
+          <div class="exp-bullet">Built a reusable troubleshooting knowledge base that reduced average case resolution time and onboarded new team members.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <div class="exp-left">
+          <div class="exp-dot dim"></div>
+          <div>
+            <div class="exp-role">Client Experience Executive</div>
+            <div class="exp-company">Advids.co</div>
+          </div>
+        </div>
+        <div class="exp-right">
+          <div class="exp-date">Jul 2021 — Sep 2022</div>
+          <div class="exp-location">Pune, MH</div>
+        </div>
+        <div class="exp-chevron">&#8964;</div>
+      </div>
+      <div class="exp-body">
+        <div class="exp-bullets">
+          <div class="exp-bullet">Led end-to-end coordination for 30+ video production projects across 15+ client accounts; introduced standardised handoff templates that eliminated delivery bottlenecks.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Work</div>
+  <div class="section-title reveal">Projects that<br>pushed limits.</div>
+  <div class="projects-grid reveal-stagger">
+
+    <div class="project-card wide">
+      <div class="project-icon">🏗️</div>
+      <div class="project-title">Enterprise Master Finance Model</div>
+      <div class="project-desc">Architected a canonical semantic model spanning financials, CRM, events, HR, and budgeting — serving as the master reference for all downstream reports. Implemented AD group-based RLS via SharePoint-loaded permission maps and multi-year running totals with dual date axes.</div>
+      <div class="project-tags">
+        <span class="tag tag-amber">Power BI</span>
+        <span class="tag tag-amber">DAX</span>
+        <span class="tag tag-teal">Snowflake</span>
+        <span class="tag tag-blue">SharePoint</span>
+        <span class="tag tag-muted">RLS</span>
+        <span class="tag tag-muted">Star Schema</span>
+      </div>
+      <div class="project-stat"><strong>178</strong> tables &nbsp;·&nbsp; <strong>380</strong> measures &nbsp;·&nbsp; <strong>220</strong> relationships</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon">🔬</div>
+      <div class="project-title">HCP Audience Segmentation Tool</div>
+      <div class="project-desc">Built an NPI provider segmentation model solving AND-mode filtering on a denormalized taxonomy — architecturally unsolvable via standard propagation — using a 16-branch SWITCH/INTERSECT DAX pattern across 4 Snowflake bridge tables.</div>
+      <div class="project-tags">
+        <span class="tag tag-amber">Power BI</span>
+        <span class="tag tag-amber">DAX</span>
+        <span class="tag tag-teal">Snowflake</span>
+        <span class="tag tag-muted">SWITCH/INTERSECT</span>
+      </div>
+      <div class="project-stat"><strong>25</strong> tables &nbsp;·&nbsp; <strong>44</strong> measures &nbsp;·&nbsp; <strong>4</strong> bridge tables</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon">📄</div>
+      <div class="project-title">Collective Campaign Paginated Report</div>
+      <div class="project-desc">Replaced a 40-hour/month manual Excel report with a fully branded, multi-tab paginated RDL report querying a live semantic model. Used TREATAS as an inline dataset-level filter — self-contained tactic datasets, zero parameter cascading.</div>
+      <div class="project-tags">
+        <span class="tag tag-amber">Paginated Reports</span>
+        <span class="tag tag-amber">RDL</span>
+        <span class="tag tag-amber">DAX</span>
+        <span class="tag tag-muted">TREATAS</span>
+      </div>
+      <div class="project-stat"><strong>40 hrs/month</strong> → <strong>minutes</strong> &nbsp;·&nbsp; <strong>13</strong> datasets</div>
+    </div>
+
+    <div class="project-card wide">
+      <div class="project-icon">🧱</div>
+      <div class="project-title">Microsoft Fabric Multi-Tenant PoC</div>
+      <div class="project-desc">Designed and provisioned a multi-tenant Fabric environment supporting three isolation patterns — separate workspaces per tenant, separate Lakehouses per tenant, and RLS-based row-level isolation within a shared semantic model — enabling the team to evaluate trade-offs across security, cost, and operational overhead. Set up F-SKU capacity, provisioned Lakehouse and Warehouse artifacts, and built Dataflows Gen2 ingestion pipelines.</div>
+      <div class="project-tags">
+        <span class="tag tag-amber">Microsoft Fabric</span>
+        <span class="tag tag-teal">Lakehouse</span>
+        <span class="tag tag-teal">Dataflows Gen2</span>
+        <span class="tag tag-blue">Data Factory</span>
+        <span class="tag tag-muted">Multi-Tenancy</span>
+        <span class="tag tag-muted">Medallion Architecture</span>
+        <span class="tag tag-muted">F-SKU</span>
+      </div>
+      <div class="project-stat"><strong>3</strong> isolation patterns &nbsp;·&nbsp; Workspace + Lakehouse + RLS isolation</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Stack</div>
+  <div class="section-title reveal">Tools I work<br>with daily.</div>
+  <div class="skills-layout reveal-stagger">
+    <div class="skill-group">
+      <div class="skill-group-title">Core BI</div>
+      <div class="skill-list">
+        <span class="skill-chip">Power BI Desktop</span>
+        <span class="skill-chip">Power BI Service</span>
+        <span class="skill-chip">DAX</span>
+        <span class="skill-chip">Power Query (M)</span>
+        <span class="skill-chip">Paginated Reports</span>
+        <span class="skill-chip">Semantic Models</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Data Modeling</div>
+      <div class="skill-list">
+        <span class="skill-chip">Star Schema</span>
+        <span class="skill-chip">Snowflake Schema</span>
+        <span class="skill-chip">SCD Type 2</span>
+        <span class="skill-chip">RLS</span>
+        <span class="skill-chip">Bridge Tables</span>
+        <span class="skill-chip">Composite Models</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Microsoft Fabric</div>
+      <div class="skill-list">
+        <span class="skill-chip">Lakehouse</span>
+        <span class="skill-chip">Warehouse</span>
+        <span class="skill-chip">Data Factory</span>
+        <span class="skill-chip">Dataflows Gen2</span>
+        <span class="skill-chip">Medallion Architecture</span>
+        <span class="skill-chip">Multi-Tenancy</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Cloud & Integration</div>
+      <div class="skill-list">
+        <span class="skill-chip">Snowflake</span>
+        <span class="skill-chip">SharePoint</span>
+        <span class="skill-chip">Power Apps</span>
+        <span class="skill-chip">Power Automate</span>
+        <span class="skill-chip">OData</span>
+        <span class="skill-chip">SAP</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Languages</div>
+      <div class="skill-list">
+        <span class="skill-chip">DAX</span>
+        <span class="skill-chip">SQL (PostgreSQL)</span>
+        <span class="skill-chip">T-SQL</span>
+        <span class="skill-chip">Snowflake SQL</span>
+        <span class="skill-chip">M (Power Query)</span>
+        <span class="skill-chip">HTML / CSS</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">AI & Tooling</div>
+      <div class="skill-list">
+        <span class="skill-chip">Claude MCP Integration</span>
+        <span class="skill-chip">AI-assisted BI Dev</span>
+        <span class="skill-chip">Jira</span>
+        <span class="skill-chip">Zoho CRM</span>
+        <span class="skill-chip">MS Office Suite</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-label">Credentials</div>
+  <div class="section-title reveal">Certified &amp;<br>recognised.</div>
+  <div class="certs-grid reveal-stagger">
+    <div class="cert-card">
+      <div class="cert-badge">Microsoft</div>
+      <div class="cert-name">Power BI Data Analyst Associate</div>
+      <div class="cert-issuer">PL-300 · Microsoft</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-badge">Microsoft</div>
+      <div class="cert-name">Fabric Analytics Engineer Associate</div>
+      <div class="cert-issuer">DP-600 · Microsoft</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-badge">Microsoft</div>
+      <div class="cert-name">Fabric Data Engineer Associate</div>
+      <div class="cert-issuer">DP-700 · Microsoft</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-badge">Snowflake</div>
+      <div class="cert-name">SnowPro Core Associate</div>
+      <div class="cert-issuer">Snowflake Platform Certification</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-badge">Award</div>
+      <div class="cert-name">Judges' Favorite — DataViz Contest</div>
+      <div class="cert-issuer">Power BI 10th Anniversary · Microsoft</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-badge">Award</div>
+      <div class="cert-name">2× Key Contributor Award</div>
+      <div class="cert-issuer">Nice Software Solutions</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="contact-eyebrow">Let's work together</div>
+  <div class="contact-title">Open to new<br>opportunities.</div>
+  <div class="contact-sub">Available for full-time roles and freelance BI consulting engagements.</div>
+  <div class="contact-links">
+    <a href="mailto:keshav.singh194@gmail.com" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      keshav.singh194@gmail.com
+    </a>
+    <span style="color:var(--border);font-size:20px;">·</span>
+    <a href="https://www.linkedin.com/in/keshavsingh19/" target="_blank" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      linkedin.com/in/keshavsingh19
+    </a>
+    <span style="color:var(--border);font-size:20px;">·</span>
+    <a href="tel:+919665797068" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.08 6.08l.96-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      +91 9665797068
+    </a>
+  </div>
+</section>
+
+<footer>
+  © 2025 Keshav Singh &nbsp;·&nbsp; Power BI &amp; Microsoft Fabric Developer &nbsp;·&nbsp; Nagpur, India
+</footer>
+
+<script>
+// accordion
+function toggleExp(header) {
+  const item = header.closest('.exp-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.exp-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observer.observe(el));
+
+// counter animation
+function animateCounter(el, target, suffix = '') {
+  const duration = 1600;
+  const start = performance.now();
+  const update = (now) => {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(eased * target).toLocaleString() + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+}
+
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      e.target.querySelectorAll('[data-target]').forEach(el => {
+        animateCounter(el, parseInt(el.dataset.target));
+      });
+      statsObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.stats-bar').forEach(el => statsObserver.observe(el));
+</script>
+</body>
+</html>
